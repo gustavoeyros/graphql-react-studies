@@ -1,11 +1,7 @@
 const graphql = require("graphql");
+const axios = require("axios");
 
 const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLSchema } = graphql;
-
-const users = [
-  { id: "23", firstName: "Gustavo", age: 18 },
-  { id: "47", firstName: "Teste", age: 20 },
-];
 
 const UserType = new GraphQLObjectType({
   name: "User", // descreve o tipo que estamos definindo
@@ -22,10 +18,12 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     user: {
       type: UserType,
-      args: { id: { type: graphql.GraphQLString } },
+      args: { id: { type: GraphQLString } },
       //o resolve é a função que utilizamos para buscar o determinado dado dentro do banco de dados
       resolve(parentValue, args) {
-        return _.find(users, { id: args.id });
+        return axios
+          .get(`http://localhost:3000/users/${args.id}`)
+          .then((res) => res.data);
       },
     },
   },
