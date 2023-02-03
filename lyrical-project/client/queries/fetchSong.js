@@ -1,4 +1,4 @@
-import gql from "graphl-tag";
+import gql from "graphql-tag";
 
 export default gql`
   query SongQuery($id: ID!) {
