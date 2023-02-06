@@ -1,11 +1,11 @@
 const express = require("express");
 const models = require("./models");
-const expressGraphQL = require("express-graphql");
+const { graphqlHTTP } = require("express-graphql");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const passportConfig = require("./services/auth");
-const MongoStore = require("connect-mongo")(session);
+const MongoStore = require("connect-mongo");
 const schema = require("./schema/schema");
 require("dotenv").config();
 
@@ -13,7 +13,7 @@ require("dotenv").config();
 const app = express();
 
 // Replace with your mongoLab URI
-const MONGO_URI = `mongodb+srv://dbuser:${process.env.MONGO_KEY}@authgraphql.srlc6kr.mongodb.net/?retryWrites=true&w=majority`;
+const MONGO_URI = `mongodb+srv://dbuser:${process.env.MONGO_KEY}@authcluster.lcwyosa.mongodb.net/?retryWrites=true&w=majority`;
 
 // Mongoose's built in promise library is deprecated, replace it with ES2015 Promise
 mongoose.Promise = global.Promise;
@@ -36,7 +36,7 @@ app.use(
     saveUninitialized: true,
     secret: "aaabbbccc",
     store: new MongoStore({
-      url: MONGO_URI,
+      mongoUrl: MONGO_URI,
       autoReconnect: true,
     }),
   })
@@ -52,7 +52,7 @@ app.use(passport.session());
 // to the GraphQL instance.
 app.use(
   "/graphql",
-  expressGraphQL({
+  graphqlHTTP({
     schema,
     graphiql: true,
   })
