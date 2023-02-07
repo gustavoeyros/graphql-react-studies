@@ -6,9 +6,9 @@ import query from "../../queries/CurrentUser";
 import { useState } from "react";
 const LoginForm = () => {
   const [errors, setErrors] = useState([]);
-  const [loginUser, { data }] = useMutation(mutation);
+  const [login, { data }] = useMutation(mutation);
   const onSubmit = ({ email, password }) => {
-    loginUser({
+    login({
       variables: { email, password },
       refetchQueries: [{ query }],
     }).catch((res) => {
@@ -16,6 +16,7 @@ const LoginForm = () => {
       setErrors(errors);
     });
   };
+
   return (
     <div>
       <div>

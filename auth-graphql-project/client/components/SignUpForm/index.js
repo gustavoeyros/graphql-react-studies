@@ -2,10 +2,13 @@ import React from "react";
 import AuthForm from "../AuthForm";
 import mutation from "../../mutations/Signup";
 import { useMutation } from "@apollo/client";
+import { useState } from "react";
+import query from "../../queries/CurrentUser";
 const SignUpForm = () => {
-  const [addUser, { data }] = useMutation(mutation);
+  const [errors, setErrors] = useState([]);
+  const [signup] = useMutation(mutation);
   const onSubmit = ({ email, password }) => {
-    addUser({
+    signup({
       variables: { email, password },
       refetchQueries: [{ query }],
     }).catch((res) => {
@@ -16,7 +19,7 @@ const SignUpForm = () => {
   return (
     <div>
       <h3>Sign Up</h3>
-      <AuthForm onSubmit={onSubmit} errors={[]} />
+      <AuthForm onSubmit={onSubmit} errors={errors} />
     </div>
   );
 };

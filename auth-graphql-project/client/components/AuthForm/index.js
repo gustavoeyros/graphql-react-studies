@@ -6,7 +6,7 @@ const AuthForm = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onSubmit(email, password);
+    props.onSubmit({ email, password });
   };
   return (
     <div className="row">
