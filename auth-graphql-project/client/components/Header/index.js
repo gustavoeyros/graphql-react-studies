@@ -1,17 +1,28 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import query from "../../queries/CurrentUser";
 import { Link } from "react-router-dom";
+import mutation from "../../mutations/Logout";
 
 const Header = () => {
   const { loading, user } = useQuery(query);
+
+  const onLogoutClick = () => {
+    useMutation(mutation, {
+      refetchQueries: [{ query }],
+    });
+  };
 
   const renderButtons = () => {
     if (loading) {
       return <p>Loading...</p>;
     }
     if (user) {
-      return <div>Logout</div>;
+      return (
+        <li>
+          <a onClick={onLogoutClick}>Logout</a>
+        </li>
+      );
     } else {
       return (
         <div>
