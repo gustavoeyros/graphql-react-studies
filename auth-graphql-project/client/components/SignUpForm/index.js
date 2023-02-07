@@ -2,11 +2,13 @@ import React from "react";
 import AuthForm from "../AuthForm";
 import mutation from "../../mutations/Signup";
 import { useMutation } from "@apollo/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import query from "../../queries/CurrentUser";
+import { useNavigate } from "react-router-dom";
 const SignUpForm = () => {
+  const navigate = useNavigate();
   const [errors, setErrors] = useState([]);
-  const [signup] = useMutation(mutation);
+  const [signup, { data }] = useMutation(mutation);
   const onSubmit = ({ email, password }) => {
     signup({
       variables: { email, password },
@@ -16,6 +18,12 @@ const SignUpForm = () => {
       setErrors(errors);
     });
   };
+
+  useEffect(() => {
+    if (data) {
+      navigate("/dashboard");
+    }
+  }, [data]);
   return (
     <div>
       <h3>Sign Up</h3>
