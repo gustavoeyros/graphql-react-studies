@@ -8,6 +8,7 @@ import LoginForm from "./components/LoginForm";
 import SignUpForm from "./components/SignUpForm";
 import { HttpLink } from "@apollo/client";
 import Dashboard from "./components/Dashboard";
+import RequireAuth from "./components/RequireAuth";
 
 const link = new HttpLink({
   uri: "/graphql",
@@ -30,7 +31,14 @@ const Root = () => {
           <Route path="/" element={<App />}>
             <Route path="login" element={<LoginForm />} />
             <Route path="signup" element={<SignUpForm />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route
+              path="/dashboard"
+              element={
+                <RequireAuth>
+                  <Dashboard />
+                </RequireAuth>
+              }
+            />
           </Route>
         </Routes>
       </BrowserRouter>
