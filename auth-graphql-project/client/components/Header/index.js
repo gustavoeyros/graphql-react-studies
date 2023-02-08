@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 import mutation from "../../mutations/Logout";
 
 const Header = () => {
-  const { loading, user } = useQuery(query);
-
+  const { loading, data } = useQuery(query);
+  const [logout] = useMutation(mutation);
+  console.log(data);
   const onLogoutClick = () => {
-    useMutation(mutation, {
+    logout({
       refetchQueries: [{ query }],
     });
   };
@@ -17,13 +18,14 @@ const Header = () => {
     if (loading) {
       return <p>Loading...</p>;
     }
-    if (user) {
+    if (data.user) {
       return (
         <li>
           <a onClick={onLogoutClick}>Logout</a>
         </li>
       );
-    } else {
+    }
+    {
       return (
         <div>
           <li>

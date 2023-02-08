@@ -5,9 +5,10 @@ import { Navigate } from "react-router-dom";
 const RequireAuth = (props) => {
   const { data, loading } = useQuery(currentUserQuery);
 
-  if (!data.user && !loading) {
+  if (!data.user && loading) {
     return <Navigate to="/login" />;
   }
+
   return props.children;
 };
 
