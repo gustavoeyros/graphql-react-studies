@@ -7,6 +7,7 @@ const passport = require("passport");
 const passportConfig = require("./services/auth");
 const MongoStore = require("connect-mongo");
 const schema = require("./schema/schema");
+const path = require("path");
 require("dotenv").config();
 
 // Create a new Express application
