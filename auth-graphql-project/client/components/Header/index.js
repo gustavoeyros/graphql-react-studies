@@ -1,10 +1,11 @@
 import React from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import query from "../../queries/CurrentUser";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import mutation from "../../mutations/Logout";
 
 const Header = () => {
+  const navigate = useNavigate();
   const { loading, data } = useQuery(query);
   const [logout] = useMutation(mutation);
   console.log(data);
@@ -12,6 +13,7 @@ const Header = () => {
     logout({
       refetchQueries: [{ query }],
     });
+    navigate("/login");
   };
 
   const renderButtons = () => {

@@ -9,7 +9,6 @@ import SignUpForm from "./components/SignUpForm";
 import { HttpLink } from "@apollo/client";
 import Dashboard from "./components/Dashboard";
 import RequireAuth from "./components/RequireAuth";
-
 const link = new HttpLink({
   uri: "/graphql",
   credentials: "same-origin",
@@ -25,8 +24,8 @@ const client = new ApolloClient({
 
 const Root = () => {
   return (
-    <ApolloProvider client={client}>
-      <BrowserRouter>
+    <BrowserRouter>
+      <ApolloProvider client={client}>
         <Routes>
           <Route path="/" element={<App />}>
             <Route path="login" element={<LoginForm />} />
@@ -41,8 +40,8 @@ const Root = () => {
             />
           </Route>
         </Routes>
-      </BrowserRouter>
-    </ApolloProvider>
+      </ApolloProvider>
+    </BrowserRouter>
   );
 };
 

@@ -8,15 +8,17 @@ module.exports = {
     path: "/",
     filename: "bundle.js",
   },
+
   module: {
     rules: [
       {
-        use: "babel-loader",
+        loader: "babel-loader",
         test: /\.js$/,
         exclude: /node_modules/,
       },
     ],
   },
+
   plugins: [
     new HtmlWebpackPlugin({
       template: "client/index.html",
